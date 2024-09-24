@@ -75,7 +75,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ),
             const SizedBox(height: 20),
             Text(
-              _cityName,
+              'City: $_cityName',
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
