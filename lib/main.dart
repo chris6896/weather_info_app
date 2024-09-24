@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 void main() {
   runApp(const MyApp());
 }
@@ -23,8 +23,6 @@ class MyApp extends StatelessWidget {
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
-  
-  
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -41,8 +39,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
       _cityName = _cityController.text.isNotEmpty
         ? _cityController.text
         : "Unknown City";
-      _temperature = "86 F";
-      _weatherCondition = "Sunny"; 
+     
+      final random = Random();
+      int temp = 15 + random.nextInt(16);
+      _temperature = "$temp C";
+
+      List<String> conditions = ['Sunny','Rainy','Cloudy'];
+      _weatherCondition = conditions[random.nextInt(3)]; 
     });
   }
   
@@ -69,6 +72,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ElevatedButton(
               onPressed: _fetchWeather,
                child: const Text("Fetch Weather"),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              _cityName,
+              style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
             Text(
