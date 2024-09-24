@@ -11,37 +11,76 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Weather',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const WeatherScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key});
   
-  final String title;
+  
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _WeatherScreenState extends State<WeatherScreen> {
+  final TextEditingController _cityController = TextEditingController();
+  String _cityName = "City Name";
+  String _temperature = "Temperature";
+  String _weatherCondition = "Weather Condition";
+
+  void _fetchWeather() {
+    setState((){
+      _cityName = _cityController.text.isNotEmpty
+        ? _cityController.text
+        : "Unknown City";
+      _temperature = "86 F";
+      _weatherCondition = "Sunny"; 
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title)
+        title: const Text("Weather"),
       ),
-      body: const Center(
-        child: Text(
-          'Flutter Demo'
-          style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _cityController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Enter City Name",
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _fetchWeather,
+               child: const Text("Fetch Weather"),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              _temperature,
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              _weatherCondition,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ],
         ),
       ),
     );
